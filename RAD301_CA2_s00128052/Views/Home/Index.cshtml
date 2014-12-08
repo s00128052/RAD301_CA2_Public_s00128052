@@ -1,0 +1,635 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model IEnumerable<Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@if (Model.Any())
+{
+    <div class="container">
+        <div id="PopupContent" style="display: none; width: auto; max-width: 500px;"></div>
+        <div class="jumbotron">
+            <div id="MovieSlider">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="MySlideShow">
+                            @foreach (var item in Model)
+                            {
+                                if (item.MovieImage.Count != 0)
+                                {
+                                <img src="@Url.Content(item.MovieImage[0].ImageUrl)" alt="@item.MovieTitle" style="width:100%;height:350px" />
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="MySlideShow">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.MovieImage.Count != 0)
+                                    {
+                                    <img src="@Url.Content(item.MovieImage[1].ImageUrl)" alt="@item.MovieTitle" style="width:100%;height:165px;margin-bottom:20px;" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="MySlideShow">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.MovieImage.Count != 0)
+                                    {
+                                    <img src="@Url.Content(item.MovieImage[2].ImageUrl)" alt="@item.MovieTitle" style="width:100%;height:165px" />
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div id="RandomMovie" class="col-md-3">
+            </div>
+            <div class="col-md-2"></div>
+            <div id="RandomActor" class="col-md-3">
+            </div>
+        </div>
+        <div id="DataTable"></div>
+        <div id="Forms">
+            <form id="CreateMovieForm" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
+                <div id="CreateMovieContent"></div>
+                <p>
+                    <input type="submit" value="Create Movie" />
+                </p>
+            </form>
+            <form id="EditMovieForm" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
+                <div id="EditMovieContent"></div>
+                <p>
+                    <input type="submit" value="Edit Movie" />
+                </p>
+            </form>
+            <form id="CreateActorForm">
+                <div id="CreateActorContent"></div>
+                <p>
+                    <input type="submit" value="Create Actor" />
+                </p>
+            </form>
+            <form id="EditActorForm">
+                <div id="EditActorContent"></div>
+                <p>
+                    <input type="submit" value="Edit Actor" />
+                </p>
+            </form>
+
+            <form id="CreateMovieActorForm">
+                <div id="CreateMovieActorContent"></div>
+                <p>
+                    <input type="submit" value="Create Character" />
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="ModalContent">
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            $("#DataTable").hide();
+            $("#CreateMovieForm").hide();
+            $("#EditMovieForm").hide();
+            $("#CreateActorForm").hide();
+            $("#EditActorForm").hide();
+            $("#CreateMovieActorForm").hide();
+            toastr.info("Welcome to Movies and Actors");
+            Slideshow();
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("RandomMovie")',
+                success: function (data) {
+                    $('#RandomMovie').html(data);
+                },
+                error: function (data) {
+                    $('#RandomMovie').html('<h3>Error in retrieval</h3>');
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("RandomActor")',
+                success: function (data) {
+                    $('#RandomActor').html(data);
+                },
+                error: function (data) {
+                    $('#RandomActor').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        });
+
+        /****************3RD PARTY**************/
+
+        function Slideshow() {
+            $('.MySlideShow').cycle({
+                speed: 1500,
+                fx: "scrollHorz",
+                loader: "Wait",
+                easing: "easeInOutQuint"
+            });
+        }
+
+        function Pop() {
+            $(".PopUpFire").webuiPopover({
+                height: 300,
+                delay: { "show": 700, "hide": 0 },
+                trigger: "hover",
+                placement: "auto",
+                type: "html",
+                cache: false,
+                closeable: true,
+                constrains: "horizontal",
+                content: function () {
+                    return $('#PopupContent').html();
+                }
+            });
+        }
+
+        /*************MOVIE CALLS************/
+
+        function OtherMovies(ActorId) {
+            $.ajax({
+                type: "GET",
+                data: { id: ActorId },
+                url: '@Url.Action("OtherMovies")',
+                success: function (data) {
+                    //$('#PopupContent').html = "";
+                    $('#PopupContent').html(data);
+                },
+                error: function (data) {
+                    $('#PopupContent').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function AllMovies(sort) {
+            $.ajax({
+                type: "GET",
+                data: { sort: sort },
+                url: '@Url.Action("AllMovies")',
+                success: function (data) {
+                    $('.jumbotron').hide();
+                    $('#RandomMovie').hide();
+                    $('#RandomActor').hide();
+                    $('#Form').hide();
+                    $('#DataTable').hide();
+                    $('#DataTable').html(data);
+                    $('#DataTable').fadeIn("slow");
+                    Pop();
+                },
+                error: function (data) {
+                    $('#DataTable').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function MovieDetails(MovieId) {
+            $.ajax({
+                type: "GET",
+                data: { id: MovieId },
+                url: '@Url.Action("MovieDetails")',
+                success: function (data) {
+                    $('#RandomMovie').hide();
+                    $('#RandomActor').hide();
+                    $('.jumbotron').hide();
+                    $('#Form').hide();
+                    $('#DataTable').hide();
+                    $('#DataTable').html(data);
+                    $('#DataTable').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#DataTable').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        /*************ACTOR CALLS**************/
+
+        function AllActors(filter) {
+            $.ajax({
+                type: "GET",
+                data: { filter: filter },
+                url: '@Url.Action("AllActors")',
+                success: function (data) {
+                    $('.jumbotron').hide();
+                    $('#RandomMovie').hide();
+                    $('#RandomActor').hide();
+                    $('#Form').hide();
+                    $('#DataTable').hide();
+                    $('#DataTable').html(data);
+                    $('#DataTable').fadeIn("slow");
+                    Pop();
+                },
+                error: function (data) {
+                    $('#DataTable').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function ActorDetails(ActorId) {
+            $.ajax({
+                type: "GET",
+                data: { id: ActorId },
+                url: '@Url.Action("ActorDetails")',
+                success: function (data) {
+                    $('.jumbotron').hide();
+                    $('#RandomMovie').hide();
+                    $('#RandomActor').hide();
+                    $('#Form').hide();
+                    $('#DataTable').hide();
+                    $('#DataTable').html(data);
+                    $('#DataTable').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#DataTable').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function OtherActors(MovieId) {
+            $.ajax({
+                type: "GET",
+                data: { id: MovieId },
+                url: '@Url.Action("OtherActors")',
+                success: function (data) {
+                    //$('#PopupContent').html = "";
+                    $('#PopupContent').html(data);
+                },
+                error: function (data) {
+                    $('#PopupContent').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+
+        /************CRUD CALLS*************/
+
+        /************GETS*************/
+        function CreateMovie() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("CreateMovie")',
+                success: function (data) {
+                    $("#DataTable").hide();
+                    $('#CreateMovieForm').hide();
+                    $('#CreateMovieContent').html(data);
+                    $('#CreateMovieForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#CreateMovieForm').html('<h3>Error in retrieving the form</h3>');
+                }
+            });
+        }
+
+        function EditMovie(movieid) {
+            $.ajax({
+                type: "GET",
+                data: { id: movieid },
+                url: '@Url.Action("EditMovie")',
+                success: function (data) {
+                    $("#DataTable").hide();
+                    $('#EditMovieForm').hide();
+                    $('#EditMovieContent').html(data);
+                    $('#EditMovieForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#EditMovieForm').html('<h3>Error in retrieving the form</h3>');
+                }
+            });
+        }
+
+        function DeleteMovieModal(movieid) {
+            $.ajax({
+                type: "GET",
+                data: { id: movieid },
+                url: '@Url.Action("DeleteMovie")',
+                success: function (data) {
+                    $('#ModalContent').html(data);
+                },
+                error: function (data) {
+                    $('#ModalContent').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function CreateActor() {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("CreateActor")',
+                success: function (data) {
+                    $('#DataTable').hide();
+                    $('#CreateActorForm').hide();
+                    $('#CreateActorContent').html(data);
+                    $('#CreateActorForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#CreateActorForm').html('<h3>Error in retrieving the form</h3>');
+                }
+            });
+        };
+
+        function EditActor(actorid) {
+            $.ajax({
+                type: "GET",
+                data: { id: actorid },
+                url: '@Url.Action("EditActor")',
+                success: function (data) {
+                    $('#DataTable').hide();
+                    $('#EditActorForm').hide();
+                    $('#EditActorContent').html(data);
+                    $('#EditActorForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#EditActorForm').html('<h3>Error in retrieving form</h3>');
+                }
+            });
+        }
+
+        function DeleteActorModal(actorid) {
+            $.ajax({
+                type: "GET",
+                data: { id: actorid },
+                url: '@Url.Action("DeleteActor")',
+                success: function (data) {
+                    $('#ModalContent').html(data);
+                },
+                error: function (data) {
+                    $('#ModalContent').html('<h3>Error in retrieval</h3>');
+                }
+            });
+        }
+
+        function AddCharacterMovie(MovieID) {
+            $.ajax({
+                type: "GET",
+                data: { id: MovieID },
+                url: '@Url.Action("AddActorToMovie")',
+                success: function (data) {
+                    $('#DataTable').hide();
+                    $('#CreateMovieActorForm').hide();
+                    $('#CreateMovieActorContent').html(data);
+                    $('#CreateMovieActorForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#CreateMovieActorForm').html('<h3>Error in retrieving form</h3>');
+                }
+            });
+        }
+
+        function AddCharacterActor(ActorID) {
+            $.ajax({
+                type: "GET",
+                data: { id: ActorID },
+                url: '@Url.Action("AddMovieToActor")',
+                success: function (data) {
+                    $('#DataTable').hide();
+                    $('#CreateMovieActorForm').hide();
+                    $('#CreateMovieActorContent').html(data);
+                    $('#CreateMovieActorForm').fadeIn("slow");
+                },
+                error: function (data) {
+                    $('#CreateMovieActorForm').html('<h3>Error in retrieving form</h3>');
+                }
+            });
+        }
+
+        /*************VALIDATION**************/
+
+        $('#CreateMovieForm').validate({
+            rules: {
+                MovieTitle: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+                MovieDescription: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 200
+                },
+                MovieDirector: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                GenreId: "required",
+                MovieReleaseDate: {
+                    required: true,
+                    date: true
+                },
+                MovieLength: {
+                    min: 0,
+                    required: true
+                },
+                MovieRating: {
+                    range: [1, 100],
+                    required: true
+                },
+                MovieposterUrl: {
+                    required: true,
+                    url: true
+                }
+            },
+            messages: {
+                MovieTitle: {
+                    required: "Required",
+                    maxlength: "Max Length is 50 Characters",
+                    minlength: "Minimum Length is 2 Characters"
+                },
+                MovieDescription: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 200 Characters"
+                },
+                MovieDirector: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 50 Characters"
+                },
+                GenreId: "Required",
+                ReleaseDate: {
+                    required: "Required",
+                    date: "Must be a valid date"
+                },
+                MovieLength: {
+                    min: "Min value is 0",
+                    required: "Required"
+                },
+                MovieRating: {
+                    range: "Must be between 1 and 100",
+                    required: "Required"
+                },
+                MovieposterUrl: {
+                    required: "Required",
+                    url: "Must be a URL"
+                }
+            }
+        });
+
+        $('#EditMovieForm').validate({
+            rules: {
+                MovieTitle: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+                MovieDescription: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 200
+                },
+                MovieDirector: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                GenreId: "required",
+                MovieRating: {
+                    range: [1, 100],
+                    required: true
+                }
+            },
+            messages: {
+                MovieTitle: {
+                    required: "Required",
+                    maxlength: "Max Length is 50 Characters",
+                    minlength: "Minimum Length is 2 Characters"
+                },
+                MovieDescription: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 200 Characters"
+                },
+                MovieDirector: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 50 Characters"
+                },
+                GenreId: {
+                    required: "Required"
+                },
+                MovieRating: {
+                    range: "Must be between 1 and 100",
+                    required: "Required"
+                }
+            }
+        });
+
+        /********************POSTS**********************/
+
+        $('#CreateMovieForm').submit(function () {
+            if ($(this).valid() == true) {
+                $.ajax({
+                    url: '@Url.Action("CreateMovie")',
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        toastr.success("Movie Created : " + $("#MovieTitle"));
+                        $(this).hide();
+                    },
+                    error: function () {
+                        toastr.error("Movie Creation Failed");
+                    }
+                });
+            }
+        });
+
+        $('#EditMovieForm').submit(function () {
+            //if ($(this).valid == true) {
+                $.ajax({
+                    url: '@Url.Action("EditMovie")',
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $(this).hide();
+                    },
+                    error: function () {
+                    }
+                });
+            //};
+        });
+
+        function DeleteMovie(movieid) {
+            $.ajax({
+                url: '@Url.Action("DeleteMovieConfirmed")',
+                    type: "POST",
+                    data: { id: movieid },
+                    success: function (data) {
+                        $(this).hide();
+                    },
+                    error: function () {
+                    }
+                });
+            }
+
+        $("#CreateActorForm").submit(function () {
+            $.ajax({
+                url: '@Url.Action("CreateActor")',
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    $(this).hide();
+                },
+                error: function () {
+                }
+            });
+        });
+
+            $("#EditActorForm").submit(function () {
+                $.ajax({
+                    url: '@Url.Action("EditActor")',
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    $(this).hide();
+                },
+                error: function () {
+                }
+            });
+        });
+
+        function DeleteActor(actorid) {
+            $.ajax({
+                url: '@Url.Action("DeleteActorConfirmed")',
+                type: "POST",
+                data: { id: actorid },
+                success: function (data) {
+                    $(this).hide();
+                },
+                error: function () {
+                }
+            });
+        }
+
+        $("#CreateMovieActorForm").submit(function () {
+            $.ajax({
+                url: '@Url.Action("CreateMovieActor")',
+                type: "POST",
+                data: $(this).serialize(),
+                success: function (data) {
+                    $(this).hide();
+                },
+                error: function () {
+                }
+            });
+        });
+    </script>
+}

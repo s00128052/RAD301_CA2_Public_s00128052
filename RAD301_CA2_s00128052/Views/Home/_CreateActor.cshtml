@@ -1,0 +1,32 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model Actor
+
+<div class="form-group">
+    <label for="ActorFirstName">@Html.DisplayNameFor(modelItem => Model.ActorFirstName):
+        <input id="ActorFirstName" type="text" name="ActorFirstName" /></label>
+</div>
+<div class="form-group">
+    <label for="ActorSurname">@Html.DisplayNameFor(modelItem => Model.ActorSurname):
+        <input id="ActorSurname" type="text" name="ActorSurname" /></label>
+</div>
+<div class="form-group">
+    <label for="ActorDescription">@Html.DisplayNameFor(modelItem => Model.ActorDescription):
+        <input type="text" id="ActorDescription" name="ActorDescription" /></label>
+</div>
+<div class="form-group">
+    <label for="ActorDOB">@Html.DisplayNameFor(modelItem => Model.ActorDOB):
+        <input id="ActorDOB" type="date" name="ActorDOB" /></label>
+</div>
+<div class="form-group">
+    <label for="ActorGender">@Html.DisplayNameFor(modelItem => Model.ActorGender):
+            @foreach (Gender g in Enum.GetValues(typeof(Gender)))
+            {
+                <input type="radio" name="Gender" value="@g" >@g
+            }
+    </label>
+</div>
+<div class="form-group">
+    <label for="ActorImageUrl">@Html.DisplayNameFor(modelItem => Model.ActorImageUrl):
+        <input id="ActorImageUrl" type="url" name="ActorImageUrl" /></label>
+</div>
+

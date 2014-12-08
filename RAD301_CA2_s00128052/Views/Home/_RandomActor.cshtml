@@ -1,0 +1,18 @@
+﻿@model RAD301_CA2_s00128052.Models.Actor
+
+@if (Model != null)
+{
+    <div class="containerfluid">
+        <h3>Featured Actor</h3>
+        <p><img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;"/></p>
+        <p>@Html.DisplayNameFor(a => Model.ActorFullName) : @Model.ActorFullName</p>
+        <p>@Html.DisplayNameFor(a => Model.ActorDOB) : @Model.ActorDOB</p>
+        <p>@Html.DisplayNameFor(a => Model.ActorGender) : @Model.ActorGender</p>
+        <a onclick="ActorDetails('@Model.ActorId')" class="btn btn-success">Details</a>
+        <a onclick="AllActors()" class="btn btn-success">All Actors</a>
+    </div>
+}
+else
+{
+    <h3>There has been an Error</h3>
+}

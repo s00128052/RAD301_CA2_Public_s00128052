@@ -1,0 +1,45 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model Actor
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <p>
+                <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;" />
+            </p>
+            <p>@Html.DisplayNameFor(m => Model.ActorFullName) : @Model.ActorFullName</p>
+            <p>@Html.DisplayNameFor(m => Model.ActorDOB) : @Model.ActorDOB</p>
+            <p>@Html.DisplayNameFor(m => Model.ActorGender) : @Model.ActorGender</p>
+            <a onclick="ActorDetails('@Model.ActorId')" class="btn btn-success">Details</a>
+            <a onclick="AllActors()" class="btn btn-success">All Actors</a>
+        </div>
+        <div class="col-md-3">
+            <input type="hidden" id="ActorId" name="ActorId" value="@Model.ActorId" />
+            <div class="form-group">
+                <label for="ActorId">
+                    Add New Character for the Actor:
+            <select id="MovieId" name="MovieId">
+                @foreach (Movie m in @ViewBag.MovieList)
+                {
+                    <option value="@m.MovieId">@m.MovieTitle</option>
+                }
+            </select></label>
+            </div>
+            <div class="form-group">
+                <label for="ActorScreenName">@Html.DisplayNameFor(modelItem => Model.Characters[0].ActorScreenName)
+                    <input type="text" name="ActorScreenName" id="ActorScreenName" />
+                </label>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been an Error</h3>
+}
+
+
+
+
+

@@ -1,0 +1,46 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model Movie
+@if (Model != null)
+{
+    <input type="hidden" name="MovieId" value="@Model.MovieId" />
+    <div class="form-group">
+        <label for="MovieTitle">@Html.DisplayNameFor(modelItem => Model.MovieTitle):
+        <input id="MovieTitle" type="text" name="MovieTitle" value="@Model.MovieTitle" /></label>
+    </div>
+    <div class="form-group">
+        <label for="MovieDescription">@Html.DisplayNameFor(modelItem => Model.MovieDescription):
+        <input type="text" value="@Model.MovieDescription" id="MovieDescription" name="MovieDescription" /></label>
+    </div>
+    <div class="form-group">
+        <label for="MovieDirector">@Html.DisplayNameFor(modelItem => Model.MovieDirector):
+        <input id="MovieDirector" type="text" value="@Model.MovieDirector" name="MovieDirector" /></label>
+    </div>
+    <div class="form-group">
+        <label for="GenreId">@Html.DisplayNameFor(modelItem => Model.GenreId):
+        <select id="GenreId" name="GenreId">
+            @foreach (Genre g in @ViewBag.Genres)
+            {
+                if (@Model.GenreId == g.GenreId)
+                {
+                <option value="@g.GenreId" selected>@g.GenreName</option>
+                }
+                else
+                {
+                <option value="@g.GenreId">@g.GenreName</option>
+                }
+            }
+        </select></label>
+    </div>
+    <input id="MovieReleaseDate" type="hidden" name="MovieReleaseDate" value="@Model.MovieReleaseDate" />
+    <input id="MovieLength" type="hidden" name="MovieLength" value="@Model.MovieLength"/>
+    <div class="form-group">
+        <label for="MovieRating">@Html.DisplayNameFor(modelItem => Model.MovieRating):
+        1<input id="MovieRating" type="range" name="MovieRating" step="1" value="@Model.MovieRating" /></label>100
+        <output id="MovieRatingOutput">50</output>
+    </div>
+    <input id="MoviePosterUrl" type="hidden" name="MoviePosterUrl" value="@Model.MoviePosterUrl" />
+}
+else
+{
+    <h3>There has been an Error</h3>
+}

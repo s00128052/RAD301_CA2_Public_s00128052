@@ -1,0 +1,44 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model IEnumerable<Actor>
+
+@if (Model.Any())
+{
+    <div class="container">
+        <a onclick="CreateActor()" class="btn btn-success">Add Actor</a>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger">Filter By</button>
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+              <li><a onclick="AllActors('All')">All</a></li>
+              @foreach (Gender g in Enum.GetValues(typeof(Gender)))
+            {
+                <li><a onclick="AllActors('@g.ToString()')">@g.ToString()</a></li>
+              }
+          </ul>
+        </div>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div onmouseover="OtherMovies(@item.ActorId)" class="PopUpFire" title="Actor's Movies">
+                        <h3>@Html.DisplayFor(modelItem => item.ActorFullName)</h3>
+                        <p>
+                            <img src="@Url.Content(item.ActorImageUrl)" alt="@item.ActorSurname" style="width:150px;height:200px" /></p>
+                        <p>Date of Birth: @Html.DisplayFor(modelItem => item.ActorDOB)</p>
+                        <p>Gender : @Html.DisplayFor(modelItem => item.ActorGender)</p>
+                    </div>
+                    <a onclick="ActorDetails('@item.ActorId')" class="btn btn-success">Details</a>
+                    <a onclick="EditActor('@item.ActorId')" class="btn btn-success">Edit</a>
+                    <a onclick="DeleteActorModal('@item.ActorId')" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Delete</a>
+                </div> 
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been a Error</h3>
+}

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<RAD301_CA2_s00128052.Models.MovieActor>
+
+@if (Model.Any())
+{
+    <div class="container" style="width: auto;">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3" style="width: 220px; background: #ffd800;">
+                    <h3>@Html.DisplayFor(modelItem => item.Movie.MovieTitle)</h3>
+                    <p>
+                        <img src="@Url.Content(item.Movie.MoviePosterUrl)" alt="@item.Movie.MovieTitle" style="width:150px;height:200px" /></p>
+                </div>
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been a Error</h3>
+}

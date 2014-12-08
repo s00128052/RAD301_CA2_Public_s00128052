@@ -1,0 +1,46 @@
+﻿@model RAD301_CA2_s00128052.Models.Actor
+
+@if (Model != null)
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>@Html.DisplayFor(modelItem => Model.ActorFullName)</h3>
+                <p><img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:300px;height:375px" /></p>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-7">
+                <h3>Details</h3>
+                <p>@Html.DisplayNameFor(modelItem => Model.ActorDOB) : @Html.DisplayFor(modelItem => Model.ActorDOB)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.ActorGender) : @Html.DisplayFor(modelItem => Model.ActorGender)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.ActorDescription) : @Html.DisplayFor(modelItem => Model.ActorDescription)</p>
+                <h3>@Html.DisplayNameFor(modelItem => Model.Characters)</h3>
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>Movie Title</th>
+                            <th>Movie Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Characters)
+                        {
+                            <tr>
+                                <td>@item.ActorScreenName</td>
+                                <td>@item.Movie.MovieTitle</td>
+                                <td>@item.Movie.MovieRating</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a onclick="AllActors()">Back to List</a>
+                <a onclick="AddCharacterActor(@Model.ActorId)">Add Character</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been a Error</h3>
+}

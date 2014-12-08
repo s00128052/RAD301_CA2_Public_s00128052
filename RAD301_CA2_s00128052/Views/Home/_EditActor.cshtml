@@ -1,0 +1,40 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model Actor
+
+@if (Model != null)
+{
+    <input id="ActorId" type="hidden" name="ActorId" value="@Model.ActorId" />
+    <div class="form-group">
+        <label for="ActorFirstName">@Html.DisplayNameFor(modelItem => Model.ActorFirstName):
+        <input id="ActorFirstName" type="text" name="ActorFirstName" value="@Model.ActorFirstName" /></label>
+    </div>
+    <div class="form-group">
+        <label for="ActorSurname">@Html.DisplayNameFor(modelItem => Model.ActorSurname):
+        <input id="ActorSurname" type="text" name="ActorSurname" value="@Model.ActorSurname" /></label>
+    </div>
+    <div class="form-group">
+        <label for="ActorDescription">@Html.DisplayNameFor(modelItem => Model.ActorDescription):
+        <input type="text" id="ActorDescription" name="ActorDescription" value="@Model.ActorDescription" /></label>
+    </div>
+    <input id="ActorDOB" type="hidden" name="ActorDOB" value="@Model.ActorDOB" />
+    <div class="form-group">
+        <label for="ActorGender">@Html.DisplayNameFor(modelItem => Model.ActorGender):
+            @foreach (Gender g in Enum.GetValues(typeof(Gender)))
+            {
+                if (@Model.ActorGender == g)
+                {
+                <input type="radio" name="Gender" checked value="@g" >@g
+                }
+                else
+                {
+                <input type="radio" name="Gender" value="@g" >@g
+                }
+            }
+        </label>
+    </div>
+    <input id="ActorImageUrl" type="hidden" name="ActorImageUrl" value="@Model.ActorImageUrl" />
+}
+else
+{
+    <h3>There has been an Error</h3>
+}

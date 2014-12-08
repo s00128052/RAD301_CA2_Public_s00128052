@@ -1,0 +1,25 @@
+﻿@model RAD301_CA2_s00128052.Models.Actor
+
+@if (Model != null)
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete @Model.ActorFullName?</h4>
+    </div>
+    <div class="modal-body">
+        <p>
+            <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;" />
+        </p>
+        <p>@Html.DisplayNameFor(m => Model.ActorFullName) : @Model.ActorFullName</p>
+        <p>@Html.DisplayNameFor(m => Model.ActorGender) : @Model.ActorGender</p>
+        <p>@Html.DisplayNameFor(m => Model.ActorDOB) : @Model.ActorDOB</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" id="DeleteActor" data-dismiss="modal" onclick="DeleteActor('@Model.ActorId')">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+}
+else
+{
+    <h3>There has been an Error</h3>
+}

@@ -1,0 +1,51 @@
+﻿@model RAD301_CA2_s00128052.Models.Movie
+
+@if (Model != null)
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>@Html.DisplayFor(modelItem => Model.MovieTitle)</h3>
+                <p>
+                    <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:300px;height:375px" />
+                </p>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-7">
+                <h3>Details</h3>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieDirector) : @Html.DisplayFor(modelItem => Model.MovieDirector)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieGenre) : @Html.DisplayFor(modelItem => Model.MovieGenre.GenreName)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieReleaseDate) : @Html.DisplayFor(modelItem => Model.MovieReleaseDate)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieLength) : @Html.DisplayFor(modelItem => Model.MovieLength)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieRating) : @Html.DisplayFor(modelItem => Model.MovieRating)</p>
+                <p>@Html.DisplayNameFor(modelItem => Model.MovieDescription) : @Html.DisplayFor(modelItem => Model.MovieDescription)</p>
+                <h3>@Html.DisplayNameFor(modelItem => Model.Characters)</h3>
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+                            <th>First Name</th>
+                            <th>Surname</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Characters)
+                        {
+                            <tr>
+                                <td>@item.ActorScreenName</td>
+                                <td>@item.Actor.ActorFirstName</td>
+                                <td>@item.Actor.ActorSurname</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a onclick="AllMovies()">Back to List</a>
+                <a onclick="AddCharacterMovie(@Model.MovieId)">Add Character</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been a Error</h3>
+}

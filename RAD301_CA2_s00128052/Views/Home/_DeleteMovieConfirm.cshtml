@@ -1,0 +1,20 @@
+﻿@model RAD301_CA2_s00128052.Models.Movie
+
+@if (Model != null)
+{
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">Are you sure you want to delete @Model.MovieTitle?</h4>
+    </div>
+    <div class="modal-body">
+        <p>
+            <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" /></p>
+        <p>@Html.DisplayNameFor(m => Model.MovieTitle) : @Model.MovieTitle</p>
+        <p>@Html.DisplayNameFor(m => Model.MovieDirector) : @Model.MovieDirector</p>
+        <p>@Html.DisplayNameFor(m => Model.MovieGenre) : @Model.MovieGenre.GenreName</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button"id="DeleteMovie" data-dismiss="modal" onclick="DeleteMovie('@Model.MovieId')">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+}

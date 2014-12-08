@@ -1,0 +1,48 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model IEnumerable<Movie>
+
+@if (Model.Any())
+{
+    <div class="container">
+        <a onclick="CreateMovie()" class="btn btn-success">Add Movie</a>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger">Sort By</button>
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a onclick="AllMovies('N')">None</a></li>
+            <li><a onclick="AllMovies('NC')">Number of Characters</a></li>
+            <li><a onclick="AllMovies('G')">Genre</a></li>
+            <li><a onclick="AllMovies('A')">Alphabetical</a></li>
+            <li><a onclick="AllMovies('RA')">Reverse Alphabetical</a></li>
+          </ul>
+        </div>
+        
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3">
+                    <div onmouseover="OtherActors(@item.MovieId)" class="PopUpFire" title="Movies Actors">
+                        <h3>@Html.DisplayFor(modelItem => item.MovieTitle)</h3>
+                        <p>
+                            <img src="@Url.Content(item.MoviePosterUrl)" alt="@item.MovieTitle" style="width:150px;height:200px" /></p>
+                        <p>Director: @Html.DisplayFor(modelItem => item.MovieDirector)</p>
+                        <p>Genre : @Html.DisplayFor(modelItem => item.MovieGenre.GenreName)</p>
+                        <p>Release Date : @Html.DisplayFor(modelItem => item.MovieReleaseDate)</p>
+                        <p>Run Time : @Html.DisplayFor(modelItem => item.MovieLength)</p>
+                        <p>Rating : @Html.DisplayFor(modelItem => item.MovieRating)</p>
+                    </div>
+                    <a onclick="MovieDetails('@item.MovieId')" class="btn btn-success">Details</a>
+                    <a onclick="EditMovie('@item.MovieId')" class="btn btn-success">Edit</a>
+                    <a onclick="DeleteMovieModal('@item.MovieId')" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Delete</a>
+                </div>      
+            }
+        </div>
+    </div>
+}
+else
+{
+    <h3>There has been a Error</h3>
+}

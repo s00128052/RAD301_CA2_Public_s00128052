@@ -1,0 +1,29 @@
+﻿@model IEnumerable<RAD301_CA2_s00128052.Models.MovieActor>
+
+@if(Model.Any())
+{
+<div class="container" style="width: auto;">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3" style="width: 220px; height: auto;">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Html.DisplayFor(modelItem => item.Actor.ActorFullName)</h3>
+                    </div>
+                    <div class="panel-body">
+                        @if (item.Actor.ActorImageUrl != null)
+                        {
+                            <img src="@Url.Content(item.Actor.ActorImageUrl)" alt="@item.Actor.ActorSurname" style="width:150px;height:200px" />
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+}
+else
+{
+    <h3>There has been an Error</h3>
+}

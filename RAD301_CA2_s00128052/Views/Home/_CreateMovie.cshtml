@@ -1,0 +1,43 @@
+﻿@using RAD301_CA2_s00128052.Models
+@model Movie
+
+<div class="form-group">
+    <label for="MovieTitle">@Html.DisplayNameFor(modelItem => Model.MovieTitle):
+        <input id="MovieTitle" type="text" name="MovieTitle" /></label>
+</div>
+<div class="form-group">
+    <label for="MovieDescription">@Html.DisplayNameFor(modelItem => Model.MovieDescription):
+        <input type="text" id="MovieDescription" name="MovieDescription" /></label>
+</div>
+<div class="form-group">
+    <label for="MovieDirector">@Html.DisplayNameFor(modelItem => Model.MovieDirector):
+        <input id="MovieDirector" type="text" name="MovieDirector" /></label>
+</div>
+<div class="form-group">
+    <label for="GenreId">@Html.DisplayNameFor(modelItem => Model.GenreId):
+        <select id="GenreId" name="GenreId">
+            @foreach (Genre g in @ViewBag.Genres)
+            {
+                <option value="@g.GenreId">@g.GenreName</option>
+            }
+        </select></label>
+</div>
+<div class="form-group">
+    <label for="MovieReleaseDate">@Html.DisplayNameFor(modelItem => Model.MovieReleaseDate):
+        <input id="MovieReleaseDate" type="date" name="MovieReleaseDate" /></label>
+</div>
+<div class="form-group">
+    <label for="MovieLength">@Html.DisplayNameFor(modelItem => Model.MovieLength):
+        <input id="MovieLength" type="number" name="MovieLength" /></label>
+</div>
+<div class="form-group">
+    <label for="MovieRating">@Html.DisplayNameFor(modelItem => Model.MovieRating):
+        1<input id="MovieRating" type="range" value="50" name="MovieRating" step="1" /></label>100
+        <output id="MovieRatingOutput">50</output>
+</div>
+<div class="form-group">
+    <label for="MovieposterUrl">@Html.DisplayNameFor(modelItem => Model.MoviePosterUrl):
+        <input id="MovieposterUrl" type="url" name="MovieposterUrl" /></label>
+</div>
+
+

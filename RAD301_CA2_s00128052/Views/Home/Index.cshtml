@@ -108,9 +108,10 @@
             $("#CreateActorForm").hide();
             $("#EditActorForm").hide();
             $("#CreateMovieActorForm").hide();
-            toastr.info("Welcome to Movies and Actors");
+            toastr.options.showMethod = 'slideDown';
+            toastr.options.closeButton = true;
+            toastr.success("Welcome to Movies and Actors");
             Slideshow();
-            $(".pie").peity("pie");
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("RandomMovie")',
@@ -656,10 +657,10 @@
                     success: function (data) {
                         $('#DataTable').hide();
                         AllMovies(null);
-                        toastr.info($('#ContentDelete').val() + ' Deleted');
+                        toastr.success($('#ContentDelete').val() + ' Deleted');
                     },
                     error: function () {
-                        toastr.info($('#ContentDelete').val() + ' Delete Failed');
+                        toastr.error($('#ContentDelete').val() + ' Delete Failed');
                     }
                 });
             }
@@ -706,10 +707,10 @@
                 success: function (data) {
                     $('#DataTable').hide();
                     AllActors(null);
-                    toastr.info($('#ContentDelete').val() + ' Deleted');
+                    toastr.success($('#ContentDelete').val() + ' Deleted');
                 },
                 error: function () {
-                    toastr.info($('#ContentDelete').val() + ' Delete Failed');
+                    toastr.error($('#ContentDelete').val() + ' Delete Failed');
                 }
             });
         }

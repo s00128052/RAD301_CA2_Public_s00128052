@@ -8,13 +8,14 @@
     </div>
     <div class="modal-body">
         <p>
-            <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" /></p>
+            <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" class="img-rounded"/></p>
         <p>@Html.DisplayNameFor(m => Model.MovieTitle) : @Model.MovieTitle</p>
         <p>@Html.DisplayNameFor(m => Model.MovieDirector) : @Model.MovieDirector</p>
         <p>@Html.DisplayNameFor(m => Model.MovieGenre) : @Model.MovieGenre.GenreName</p>
+        <input type="hidden" id="ContentDelete" value="@Model.MovieTitle" />
     </div>
     <div class="modal-footer">
-        <button type="button"id="DeleteMovie" data-dismiss="modal" onclick="DeleteMovie('@Model.MovieId')">Confirm</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button"id="DeleteMovie" data-dismiss="modal" class="btn btn-danger btn-sm" onclick="DeleteMovie('@Model.MovieId')"><span class="glyphicon glyphicon-ok" style="margin-right:5px;"></span> Confirm</button>
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><span class="glyphicon glyphicon-remove" style="margin-right:5px;"/>Cancel</button>
     </div>
 }

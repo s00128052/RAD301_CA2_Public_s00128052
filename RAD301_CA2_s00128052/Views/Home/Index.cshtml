@@ -51,50 +51,48 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2"></div>
-            <div id="RandomMovie" class="col-md-3">
+            <div id="RandomMovie" class="col-md-4 col-md-offset-1">
             </div>
-            <div class="col-md-2"></div>
-            <div id="RandomActor" class="col-md-3">
+            <div id="RandomActor" class="col-md-4 col-md-offset-2">
             </div>
         </div>
         <div id="DataTable"></div>
         <div id="Forms">
-            <form id="CreateMovieForm" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
+            <form id="CreateMovieForm" class="form-horizontal" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
                 <div id="CreateMovieContent"></div>
-                <p>
-                    <input type="submit" value="Create Movie" />
+                <p class="col-sm-offset-2">
+                    <input type="submit" class="btn btn-success btn-sm" value="Create Movie" />
                 </p>
             </form>
-            <form id="EditMovieForm" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
+            <form id="EditMovieForm" class="form-horizontal" oninput="MovieRatingOutput.value=parseInt(MovieRating.value)">
                 <div id="EditMovieContent"></div>
-                <p>
-                    <input type="submit" value="Edit Movie" />
+                <p class="col-sm-offset-2">
+                    <input type="submit" class="btn btn-success btn-sm" value="Edit Movie" />
                 </p>
             </form>
-            <form id="CreateActorForm">
+            <form id="CreateActorForm" class="form-horizontal">
                 <div id="CreateActorContent"></div>
-                <p>
-                    <input type="submit" value="Create Actor" />
+                <p class="col-sm-offset-2">
+                    <input type="submit" class="btn btn-success btn-sm" value="Create Actor" />
                 </p>
             </form>
-            <form id="EditActorForm">
+            <form id="EditActorForm" class="form-horizontal">
                 <div id="EditActorContent"></div>
-                <p>
-                    <input type="submit" value="Edit Actor" />
+                <p class="col-sm-offset-2">
+                    <input type="submit" class="btn btn-success btn-sm" value="Edit Actor" />
                 </p>
             </form>
 
-            <form id="CreateMovieActorForm">
+            <form id="CreateMovieActorForm" class="form-horizontal">
                 <div id="CreateMovieActorContent"></div>
                 <p>
-                    <input type="submit" value="Create Character" />
+                    <input type="submit" class="btn btn-success btn-sm" value="Create Character" />
                 </p>
             </form>
         </div>
     </div>
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content" id="ModalContent">
             </div>
         </div>
@@ -103,7 +101,7 @@
 
 @section scripts{
     <script>
-        $(function () {
+        $( document ).ready(function(){
             $("#DataTable").hide();
             $("#CreateMovieForm").hide();
             $("#EditMovieForm").hide();
@@ -112,7 +110,7 @@
             $("#CreateMovieActorForm").hide();
             toastr.info("Welcome to Movies and Actors");
             Slideshow();
-
+            $(".pie").peity("pie");
             $.ajax({
                 type: "GET",
                 url: '@Url.Action("RandomMovie")',
@@ -134,6 +132,7 @@
                     $('#RandomActor').html('<h3>Error in retrieval</h3>');
                 }
             });
+            
         });
 
         /****************3RD PARTY**************/
@@ -163,6 +162,16 @@
             });
         }
 
+        function Pie(i, id) {
+            var number = parseInt(i);
+            var num2 = parseInt(100 - i);
+            var string = number + "," + num2;
+            $('#' + id).html(string);
+            $('#' + id).peity("pie", {
+                fill: ["blue", "white"]
+            });
+        }
+
         /*************MOVIE CALLS************/
 
         function OtherMovies(ActorId) {
@@ -175,7 +184,7 @@
                     $('#PopupContent').html(data);
                 },
                 error: function (data) {
-                    $('#PopupContent').html('<h3>Error in retrieval</h3>');
+                    $('#PopupContent').html('<h3>This Actor has no Movies</h3>');
                 }
             });
         }
@@ -274,7 +283,7 @@
                     $('#PopupContent').html(data);
                 },
                 error: function (data) {
-                    $('#PopupContent').html('<h3>Error in retrieval</h3>');
+                    $('#PopupContent').html('<h3>This Movie has no Actors</h3>');
                 }
             });
         }
@@ -288,6 +297,7 @@
                 type: "GET",
                 url: '@Url.Action("CreateMovie")',
                 success: function (data) {
+                    
                     $("#DataTable").hide();
                     $('#CreateMovieForm').hide();
                     $('#CreateMovieContent').html(data);
@@ -414,6 +424,10 @@
         /*************VALIDATION**************/
 
         $('#CreateMovieForm').validate({
+            //invalidHandler: function (form) {
+            //    $('.form-group').addClass("has-error");
+            //},
+            //focusCleanup: true,
             rules: {
                 MovieTitle: {
                     required: true,
@@ -465,7 +479,7 @@
                     maxlength: "Max Length is 50 Characters"
                 },
                 GenreId: "Required",
-                ReleaseDate: {
+                MovieReleaseDate: {
                     required: "Required",
                     date: "Must be a valid date"
                 },
@@ -478,6 +492,69 @@
                     required: "Required"
                 },
                 MovieposterUrl: {
+                    required: "Required",
+                    url: "Must be a URL"
+                }
+            }
+        });
+
+        $('#CreateActorForm').validate({
+            //invalidHandler: function (form) {
+            //    $('.form-group').addClass("has-error");
+            //},
+            //focusCleanup: true,
+            rules: {
+                ActorFirstName: {
+                    required: true,
+                    maxlength: 50,
+                    minlength: 2
+                },
+                ActorSurname: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 50
+                },
+                ActorDescription: {
+                    required: true,
+                    minlength: 2,
+                    maxlength: 200
+                },
+                ActorDOB: {
+                    required: true,
+                    date: true
+                },
+                ActorGender: {
+                    required: true
+                },
+                ActorImageUrl: {
+                    required: true,
+                    url:true
+                }
+            },
+            messages: {
+                ActorFirstName: {
+                    required: "Required",
+                    maxlength: "Max Length is 50 Characters",
+                    minlength: "Minimum Length is 2 Characters"
+                },
+                ActorSurname: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 200 Characters"
+                },
+                ActorDescription: {
+                    required: "Required",
+                    minlength: "Minimum Length is 2 Characters",
+                    maxlength: "Max Length is 50 Characters"
+                },
+                ActorDOB: {
+                    required: "Required",
+                    date: "Must be a valid date"
+                },
+                ActorGender: {
+                    required: "Required"
+                },
+                ActorImageUrl: {
                     required: "Required",
                     url: "Must be a URL"
                 }
@@ -542,11 +619,12 @@
                     type: "POST",
                     data: $(this).serialize(),
                     success: function (data) {
-                        toastr.success("Movie Created : " + $("#MovieTitle"));
-                        $(this).hide();
+                        $('#DataTable').hide();
+                        AllMovies(null);
+                        toastr.info($('#MovieTitleCreate').val() + ' Created');
                     },
                     error: function () {
-                        toastr.error("Movie Creation Failed");
+                        toastr.info($('#MovieTitleCreate').val() + ' Create Failed');
                     }
                 });
             }
@@ -559,9 +637,12 @@
                     type: "POST",
                     data: $(this).serialize(),
                     success: function (data) {
-                        $(this).hide();
+                        $('#DataTable').hide();
+                        AllMovies(null);
+                        toastr.info($('#MovieTitleEdit').val() + ' Edited');
                     },
                     error: function () {
+                        toastr.info($('#MovieTitleEdit').val() + ' Edit Failed');
                     }
                 });
             //};
@@ -573,24 +654,32 @@
                     type: "POST",
                     data: { id: movieid },
                     success: function (data) {
-                        $(this).hide();
+                        $('#DataTable').hide();
+                        AllMovies(null);
+                        toastr.info($('#ContentDelete').val() + ' Deleted');
                     },
                     error: function () {
+                        toastr.info($('#ContentDelete').val() + ' Delete Failed');
                     }
                 });
             }
 
         $("#CreateActorForm").submit(function () {
-            $.ajax({
-                url: '@Url.Action("CreateActor")',
-                type: "POST",
-                data: $(this).serialize(),
-                success: function (data) {
-                    $(this).hide();
-                },
-                error: function () {
-                }
-            });
+            if ($(this).valid() == true) {
+                $.ajax({
+                    url: '@Url.Action("CreateActor")',
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#DataTable').hide();
+                        AllActors(null);
+                        toastr.info($('#ActorFirstNameCreate').val() + " " + $('#ActorSurnameCreate').val() + ' Created');
+                    },
+                    error: function () {
+                        toastr.info($('#ActorFirstNameCreate').val() + " " + $('#ActorSurnameCreate').val() + ' Create Failed');
+                    }
+                });
+            }
         });
 
             $("#EditActorForm").submit(function () {
@@ -599,9 +688,12 @@
                 type: "POST",
                 data: $(this).serialize(),
                 success: function (data) {
-                    $(this).hide();
+                    $('#DataTable').hide();
+                    AllActors(null);
+                    toastr.info($('#ActorFirstNameEdit').val() + " " + $('#ActorSurnameEdit').val() + ' Edited');
                 },
                 error: function () {
+                    toastr.info($('#ActorFirstNameEdit').val() + " " + $('#ActorSurnameEdit').val() + ' Edit Failed');
                 }
             });
         });
@@ -612,9 +704,12 @@
                 type: "POST",
                 data: { id: actorid },
                 success: function (data) {
-                    $(this).hide();
+                    $('#DataTable').hide();
+                    AllActors(null);
+                    toastr.info($('#ContentDelete').val() + ' Deleted');
                 },
                 error: function () {
+                    toastr.info($('#ContentDelete').val() + ' Delete Failed');
                 }
             });
         }
@@ -625,9 +720,10 @@
                 type: "POST",
                 data: $(this).serialize(),
                 success: function (data) {
-                    $(this).hide();
+                    toastr.info('Character Added');
                 },
                 error: function () {
+                    toastr.info('Character Add Failed');
                 }
             });
         });

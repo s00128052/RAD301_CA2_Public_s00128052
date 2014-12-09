@@ -1,43 +1,48 @@
 ﻿@using RAD301_CA2_s00128052.Models
 @model Movie
 
+<h3 class="col-sm-offset-1">Create Movie<a onclick="$('#CreateMovieForm').hide(),AllMovies()" style="margin-left:30px;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" style="margin-right:5px;"/>Cancel</a></h3>
 <div class="form-group">
-    <label for="MovieTitle">@Html.DisplayNameFor(modelItem => Model.MovieTitle):
-        <input id="MovieTitle" type="text" name="MovieTitle" /></label>
+    <label for="MovieTitle" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieTitle):</label>
+        <div class="col-sm-4"><input id="MovieTitleCreate" type="text" name="MovieTitle" class="form-control"/></div>
 </div>
 <div class="form-group">
-    <label for="MovieDescription">@Html.DisplayNameFor(modelItem => Model.MovieDescription):
-        <input type="text" id="MovieDescription" name="MovieDescription" /></label>
+    <label for="MovieDescription" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieDescription):</label>
+        <div class="col-sm-4"><input type="text" id="MovieDescription" name="MovieDescription" class="form-control"/></div>
 </div>
 <div class="form-group">
-    <label for="MovieDirector">@Html.DisplayNameFor(modelItem => Model.MovieDirector):
-        <input id="MovieDirector" type="text" name="MovieDirector" /></label>
+    <label for="MovieDirector" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieDirector):</label>
+        <div class="col-sm-4"><input id="MovieDirector" type="text" name="MovieDirector" class="form-control" /></div>
 </div>
 <div class="form-group">
-    <label for="GenreId">@Html.DisplayNameFor(modelItem => Model.GenreId):
-        <select id="GenreId" name="GenreId">
+    <label for="GenreId" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.GenreId):</label>
+        <div class="col-sm-4"><select id="GenreId" name="GenreId" class="form-control">
             @foreach (Genre g in @ViewBag.Genres)
             {
                 <option value="@g.GenreId">@g.GenreName</option>
             }
-        </select></label>
+        </select></div>
 </div>
 <div class="form-group">
-    <label for="MovieReleaseDate">@Html.DisplayNameFor(modelItem => Model.MovieReleaseDate):
-        <input id="MovieReleaseDate" type="date" name="MovieReleaseDate" /></label>
+    <label for="MovieReleaseDate" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieReleaseDate):</label>
+        <div class="col-sm-4"><input id="MovieReleaseDate" type="text" name="MovieReleaseDate" class="form-control datepicker" data-provide="datepicker"/></div>
 </div>
 <div class="form-group">
-    <label for="MovieLength">@Html.DisplayNameFor(modelItem => Model.MovieLength):
-        <input id="MovieLength" type="number" name="MovieLength" /></label>
+    <label for="MovieLength" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieLength):</label>
+        <div class="col-sm-4"><input id="MovieLength" type="number" value="50" min="0" name="MovieLength"class="form-control" /></div>
 </div>
 <div class="form-group">
-    <label for="MovieRating">@Html.DisplayNameFor(modelItem => Model.MovieRating):
-        1<input id="MovieRating" type="range" value="50" name="MovieRating" step="1" /></label>100
+    <label for="MovieRating" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MovieRating):</label>
+    <div class="col-sm-3">
+        <input id="MovieRating" type="range" min="1" max="100" value="50" name="MovieRating" step="1" class="form-control"/>
+    </div>
+    <div class="col-sm-1">
         <output id="MovieRatingOutput">50</output>
+        </div>
 </div>
 <div class="form-group">
-    <label for="MovieposterUrl">@Html.DisplayNameFor(modelItem => Model.MoviePosterUrl):
-        <input id="MovieposterUrl" type="url" name="MovieposterUrl" /></label>
+    <label for="MovieposterUrl" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.MoviePosterUrl):</label>
+        <div class="col-sm-4"><input id="MovieposterUrl" type="url" name="MovieposterUrl" class="form-control"/></div>
 </div>
 
 

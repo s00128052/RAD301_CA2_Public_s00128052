@@ -7,7 +7,7 @@
             <div class="col-md-4">
                 <h3>@Html.DisplayFor(modelItem => Model.MovieTitle)</h3>
                 <p>
-                    <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:300px;height:375px" />
+                    <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" class="img-thumbnail" style="width:300px;height:375px" />
                 </p>
             </div>
             <div class="col-md-1"></div>
@@ -39,11 +39,12 @@
                         }
                     </tbody>
                 </table>
-                <a onclick="AllMovies()">Back to List</a>
-                <a onclick="AddCharacterMovie(@Model.MovieId)">Add Character</a>
+
+                <a onclick="AddCharacterMovie(@Model.MovieId)" class="btn btn-success btn-sm">Add Character</a>
+                <a onclick="AllMovies()" class="btn btn-primary btn-sm">Back to List</a>
             </div>
         </div>
-    </div>
+    </div>   
 }
 else
 {

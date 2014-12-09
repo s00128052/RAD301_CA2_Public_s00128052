@@ -2,15 +2,28 @@
 
 @if (Model != null)
 {
-    <div class="containerfluid">
-        <h3>Featured Actor</h3>
-        <p><img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;"/></p>
-        <p>@Html.DisplayNameFor(a => Model.ActorFullName) : @Model.ActorFullName</p>
-        <p>@Html.DisplayNameFor(a => Model.ActorDOB) : @Model.ActorDOB</p>
-        <p>@Html.DisplayNameFor(a => Model.ActorGender) : @Model.ActorGender</p>
-        <a onclick="ActorDetails('@Model.ActorId')" class="btn btn-success">Details</a>
-        <a onclick="AllActors()" class="btn btn-success">All Actors</a>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                Featured Actor
+            </div>
+        </div>
+        <div class="panel-body" style="width:auto;">
+            <p class="text-center">
+                <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;" class="img-rounded"/>
+            </p>
+            <dl class="dl-horizontal" style="margin-left:-25px;">
+            <dt>@Html.DisplayNameFor(a => Model.ActorFullName) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.ActorFullName)</dd>
+            <dt>@Html.DisplayNameFor(a => Model.ActorDOB) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.ActorDOB)</dd>
+            <dt>@Html.DisplayNameFor(a => Model.ActorGender) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.ActorGender)</dd>
+            </dl>
+        </div>
+        <div class="panel-footer">
+            <a onclick="ActorDetails('@Model.ActorId')" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search" style="margin-right:5px;"></span>Details</a>
+            <a onclick="AllActors()" class="btn btn-primary btn-sm">All Actors</a>
+        </div>
     </div>
+    
 }
 else
 {

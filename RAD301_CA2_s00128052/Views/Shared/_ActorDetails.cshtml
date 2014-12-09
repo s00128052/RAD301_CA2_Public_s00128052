@@ -6,7 +6,8 @@
         <div class="row">
             <div class="col-md-4">
                 <h3>@Html.DisplayFor(modelItem => Model.ActorFullName)</h3>
-                <p><img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:300px;height:375px" /></p>
+                <p>
+                    <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" class="img-thumbnail" style="width:300px;height:375px" /></p>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-7">
@@ -29,13 +30,14 @@
                             <tr>
                                 <td>@item.ActorScreenName</td>
                                 <td>@item.Movie.MovieTitle</td>
-                                <td>@item.Movie.MovieRating</td>
+                                <td><span style="margin-right:20px;">@item.Movie.MovieRating</span><span id="@item.Movie.MovieId" @*style="width:30px;background:#f00;height:10px;display:inline-block;"*@ onmouseover="Pie(@item.Movie.MovieRating, @item.Movie.MovieId)" class="pie">Hover for Chart</span></td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <a onclick="AllActors()">Back to List</a>
-                <a onclick="AddCharacterActor(@Model.ActorId)">Add Character</a>
+                <a onclick="AddCharacterActor(@Model.ActorId)" class="btn btn-success btn-sm">Add Character</a>
+                <a onclick="AllActors()" class="btn btn-primary btn-sm">Back to List</a>
+
             </div>
         </div>
     </div>

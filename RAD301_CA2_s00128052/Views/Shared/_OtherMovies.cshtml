@@ -3,19 +3,31 @@
 @if (Model.Any())
 {
     <div class="container" style="width: auto;">
-        <div class="row">
+        <div>
             @foreach (var item in Model)
             {
-                <div class="col-md-3" style="width: 220px; background: #ffd800;">
-                    <h3>@Html.DisplayFor(modelItem => item.Movie.MovieTitle)</h3>
-                    <p>
-                        <img src="@Url.Content(item.Movie.MoviePosterUrl)" alt="@item.Movie.MovieTitle" style="width:150px;height:200px" /></p>
+                <div class="col-md-2" style="width: 220px;">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">@Html.DisplayFor(modelItem => item.Movie.MovieTitle)</h3>
+                        </div>
+
+                        <div class="panel-body">
+                            @if (item.Movie.MoviePosterUrl != null)
+                            {
+                                <p class="text-center">
+                                    <img src="@Url.Content(item.Movie.MoviePosterUrl)" alt="@item.Movie.MovieTitle" style="width:150px;height:200px" />
+                                </p>
+                            }
+                        </div>
+                    </div>
                 </div>
             }
         </div>
     </div>
+                
 }
 else
 {
-    <h3>There has been a Error</h3>
+    <h3>This Actor has no Movies</h3>
 }

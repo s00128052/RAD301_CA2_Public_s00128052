@@ -4,36 +4,50 @@
 @if (Model.Any())
 {
     <div class="container">
-        <a onclick="CreateActor()" class="btn btn-success">Add Actor</a>
+        <a onclick="CreateActor()" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" style="margin-right:5px;"></span>Add Actor</a>
         <div class="btn-group">
-          <button type="button" class="btn btn-danger">Filter By</button>
-          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-            <span class="caret"></span>
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-              <li><a onclick="AllActors('All')">All</a></li>
-              @foreach (Gender g in Enum.GetValues(typeof(Gender)))
-            {
-                <li><a onclick="AllActors('@g.ToString()')">@g.ToString()</a></li>
-              }
-          </ul>
+            <button type="button" class="btn btn-danger btn-sm">Filter By</button>
+            <button type="button" class="btn btn-danger dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a onclick="AllActors('All')">All</a></li>
+                @foreach (Gender g in Enum.GetValues(typeof(Gender)))
+                {
+                    <li><a onclick="AllActors('@g.ToString()')">@g.ToString()</a></li>
+                }
+            </ul>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top:20px;">
             @foreach (var item in Model)
             {
                 <div class="col-md-3">
                     <div onmouseover="OtherMovies(@item.ActorId)" class="PopUpFire" title="Actor's Movies">
-                        <h3>@Html.DisplayFor(modelItem => item.ActorFullName)</h3>
-                        <p>
-                            <img src="@Url.Content(item.ActorImageUrl)" alt="@item.ActorSurname" style="width:150px;height:200px" /></p>
-                        <p>Date of Birth: @Html.DisplayFor(modelItem => item.ActorDOB)</p>
-                        <p>Gender : @Html.DisplayFor(modelItem => item.ActorGender)</p>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    @Html.DisplayFor(modelItem => item.ActorFullName)
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <p class="text-center">
+                                    <img src="@Url.Content(item.ActorImageUrl)" alt="@item.ActorSurname" style="width:150px;height:200px" class="img-rounded" />
+                                </p>
+                                <dl class="dl-horizontal" style="margin-left:-50px;">
+                                <dt>Date of Birth:</dt> <dd>@Html.DisplayFor(modelItem => item.ActorDOB)</dd>
+                                <dt>Gender :</dt> <dd>@Html.DisplayFor(modelItem => item.ActorGender)</dd>
+                                </dl>
+                            </div>
+
+                            <div class="panel-footer">
+                                <a onclick="ActorDetails('@item.ActorId')" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search" style="margin-right:5px;"></span>Details</a>
+                                <a onclick="EditActor('@item.ActorId')" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil" style="margin-right:5px;"></span>Edit</a>
+                                <a onclick="DeleteActorModal('@item.ActorId')" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-trash" style="margin-right:5px;"></span>Delete</a>
+                            </div>
+                        </div>
                     </div>
-                    <a onclick="ActorDetails('@item.ActorId')" class="btn btn-success">Details</a>
-                    <a onclick="EditActor('@item.ActorId')" class="btn btn-success">Edit</a>
-                    <a onclick="DeleteActorModal('@item.ActorId')" class="btn btn-success"  data-toggle="modal" data-target="#myModal">Delete</a>
-                </div> 
+                </div>
             }
         </div>
     </div>

@@ -4,32 +4,31 @@
 @if (Model != null)
 {
     <div class="row">
-        <div class="col-md-6">
+        <h3>Add an Actor to @Model.MovieTitle<a onclick="$('#CreateMovieActorForm').hide(), MovieDetails('@Model.MovieId')" style="margin-left:30px;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" style="margin-right:5px;"/>Cancel</a></h3>
+        <div class="col-md-5">
             <p>
-                <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" />
+                <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" class="img-thumbnail" style="width:250px;height:300px;" />
             </p>
-            <p>@Html.DisplayNameFor(m => Model.MovieTitle) : @Model.MovieTitle</p>
-            <p>@Html.DisplayNameFor(m => Model.MovieDirector) : @Model.MovieDirector</p>
-            <p>@Html.DisplayNameFor(m => Model.MovieGenre) : @Model.MovieGenre.GenreName</p>
-            <a onclick="MovieDetails('@Model.MovieId')" class="btn btn-success">Back</a>
-            <a onclick="AllMovies()" class="btn btn-success">All Movies</a>
+            <p>@Html.DisplayNameFor(m => Model.MovieTitle) : @Html.DisplayFor(modelitem=>Model.MovieTitle)</p>
+            <p>@Html.DisplayNameFor(m => Model.MovieDirector) : @Html.DisplayFor(modelitem=>Model.MovieDirector)</p>
+            <p>@Html.DisplayNameFor(m => Model.MovieGenre) : @Html.DisplayFor(modelitem=>Model.MovieGenre.GenreName)</p>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-7">
             <input type="hidden" id="MovieId" name="MovieId" value="@Model.MovieId" />
             <div class="form-group">
-                <label for="ActorId">
-                    Add New Character to Movie:
-            <select id="ActorId" name="ActorId">
+                <label for="ActorId" class="col-sm-3 control-label">
+                    Choose and Actor:</label>
+            <div class="col-sm-4"><select id="ActorId" name="ActorId" class="form-control">
                 @foreach (Actor a in @ViewBag.ActorsList)
                 {
                     <option value="@a.ActorId">@a.ActorFullName</option>
                 }
-            </select></label>
+            </select></div>
             </div>
             <div class="form-group">
-                <label for="ActorScreenName">@Html.DisplayNameFor(modelItem => Model.Characters[0].ActorScreenName)
-                    <input type="text" name="ActorScreenName" id="ActorScreenName" />
-                </label>
+                <label for="ActorScreenName" class="col-sm-3 control-label">@Html.DisplayNameFor(modelItem => Model.Characters[0].ActorScreenName)</label>
+                    <div class="col-sm-4"><input type="text" name="ActorScreenName" id="ActorScreenName" class="form-control" /></div>
+                
             </div>
         </div>
     </div>

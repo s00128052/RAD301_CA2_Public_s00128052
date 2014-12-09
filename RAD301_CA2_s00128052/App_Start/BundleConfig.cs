@@ -17,7 +17,9 @@ namespace RAD301_CA2_s00128052
                         "~/Scripts/toastr.js",
                         "~/Scripts/jquery.webui-popover.js",
                         "~/Scripts/jquery.easing.1.3.js",
-                        "~/Scripts/jquery.cycle2.js"));
+                        "~/Scripts/jquery.cycle2.js",
+                        "~/Scripts/bootstrap-datepicker.js",
+                        "~/Scripts/jquery.peity.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
@@ -32,10 +34,11 @@ namespace RAD301_CA2_s00128052
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/bootstrap.css",
+                        "~/Content/bootstrap1.css",
                         "~/Content/toastr.css",
                         "~/Content/jquery.webui-popover.css",
-                        "~/Content/CustomCSS.css"));
+                        "~/Content/CustomCSS.css",
+                        "~/Content/bootstrap-datepicker.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

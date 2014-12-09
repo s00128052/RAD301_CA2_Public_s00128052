@@ -3,36 +3,37 @@
 
 @if (Model != null)
 {
+    <h3 class="col-sm-offset-1">Edit Actor @Model.ActorFullName<a onclick="$('#EditActorForm').hide(),AllActors()" style="margin-left:30px;" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-remove" style="margin-right:5px;"/>Cancel</a></h3>
     <input id="ActorId" type="hidden" name="ActorId" value="@Model.ActorId" />
     <div class="form-group">
-        <label for="ActorFirstName">@Html.DisplayNameFor(modelItem => Model.ActorFirstName):
-        <input id="ActorFirstName" type="text" name="ActorFirstName" value="@Model.ActorFirstName" /></label>
+        <label for="ActorFirstName" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.ActorFirstName):</label>
+        <div class="col-sm-4"><input id="ActorFirstNameEdit" type="text" name="ActorFirstName" class="form-control" value="@Model.ActorFirstName" /></div>
     </div>
     <div class="form-group">
-        <label for="ActorSurname">@Html.DisplayNameFor(modelItem => Model.ActorSurname):
-        <input id="ActorSurname" type="text" name="ActorSurname" value="@Model.ActorSurname" /></label>
+        <label for="ActorSurname" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.ActorSurname):</label>
+        <div class="col-sm-4"><input id="ActorSurnameEdit" type="text" name="ActorSurname" class="form-control" value="@Model.ActorSurname" /></div>
     </div>
     <div class="form-group">
-        <label for="ActorDescription">@Html.DisplayNameFor(modelItem => Model.ActorDescription):
-        <input type="text" id="ActorDescription" name="ActorDescription" value="@Model.ActorDescription" /></label>
+        <label for="ActorDescription" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.ActorDescription):</label>
+        <div class="col-sm-4"><input type="text" id="ActorDescription" name="ActorDescription" class="form-control" value="@Model.ActorDescription" /></div>
     </div>
     <input id="ActorDOB" type="hidden" name="ActorDOB" value="@Model.ActorDOB" />
     <div class="form-group">
-        <label for="ActorGender">@Html.DisplayNameFor(modelItem => Model.ActorGender):
-            @foreach (Gender g in Enum.GetValues(typeof(Gender)))
+        <label for="ActorGender" class="col-sm-2 control-label">@Html.DisplayNameFor(modelItem => Model.ActorGender):</label>
+            <div class="col-sm-4">@foreach (Gender g in Enum.GetValues(typeof(Gender)))
             {
                 if (@Model.ActorGender == g)
                 {
-                <input type="radio" name="Gender" checked value="@g" >@g
+                <input type="radio" name="ActorGender" checked value="@g" >@g
                 }
                 else
                 {
-                <input type="radio" name="Gender" value="@g" >@g
+                <input type="radio" name="ActorGender" value="@g" >@g
                 }
-            }
-        </label>
+            }</div>
+        
     </div>
-    <input id="ActorImageUrl" type="hidden" name="ActorImageUrl" value="@Model.ActorImageUrl" />
+    <input id="ActorImageUrl" type="hidden" class="form-control" name="ActorImageUrl" value="@Model.ActorImageUrl" />
 }
 else
 {

@@ -1,16 +1,29 @@
 ﻿@model RAD301_CA2_s00128052.Models.Movie
 
-@if(Model!=null)
+@if (Model != null)
 {
-<div class="containerfluid">
-    <h3>Featured Movie</h3>
-    <p><img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" /></p>
-    <p>@Html.DisplayNameFor(m=>Model.MovieTitle) : @Model.MovieTitle</p>
-    <p>@Html.DisplayNameFor(m=>Model.MovieDirector) : @Model.MovieDirector</p>
-    <p>@Html.DisplayNameFor(m=>Model.MovieGenre) : @Model.MovieGenre.GenreName</p>
-    <a onclick="MovieDetails('@Model.MovieId')" class="btn btn-success">Details</a>
-    <a onclick="AllMovies()" class="btn btn-success">All Movies</a>
-</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    Featured Movie
+                </div>
+            </div>
+            <div class="panel-body" style="width:auto;">
+                <p class="text-center">
+                    <img src="@Url.Content(Model.MoviePosterUrl)" alt="@Model.MovieTitle" style="width:250px;height:300px;" class="img-rounded" />
+                </p>
+                <dl class="dl-horizontal" style="margin-left:-25px;">
+                <dt>@Html.DisplayNameFor(m => Model.MovieTitle) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.MovieTitle)</dd>
+                <dt>@Html.DisplayNameFor(m => Model.MovieDirector) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.MovieDirector)</dd>
+                <dt>@Html.DisplayNameFor(m => Model.MovieGenre) :</dt> <dd>@Html.DisplayFor(modelitem=>Model.MovieGenre.GenreName)</dd>
+                </dl>
+            </div>
+            <div class="panel-footer">
+                <a onclick="MovieDetails('@Model.MovieId')" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search" style="margin-right:5px;"></span>Details</a>
+                <a onclick="AllMovies()" class="btn btn-primary btn-sm">All Movies</a>
+            </div>
+        </div>
+    
 }
 else
 {

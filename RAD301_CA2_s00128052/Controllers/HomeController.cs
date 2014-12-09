@@ -51,16 +51,16 @@ namespace RAD301_CA2_s00128052.Controllers
                         movies = db.Movies.Include(m => m.MovieGenre).ToList();
                         break;
                     case "NC":
-                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m=>m.Characters.Count()).ToList();
+                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m => m.Characters.Count()).ToList();
                         break;
                     case "G":
-                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m=>m.MovieGenre.GenreName).ToList();
+                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m => m.MovieGenre.GenreName).ToList();
                         break;
                     case "A":
-                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m=>m.MovieTitle).ToList();
+                        movies = db.Movies.Include(m => m.MovieGenre).OrderBy(m => m.MovieTitle).ToList();
                         break;
                     case "RA":
-                        movies = db.Movies.Include(m => m.MovieGenre).OrderByDescending(m=>m.MovieTitle).ToList();
+                        movies = db.Movies.Include(m => m.MovieGenre).OrderByDescending(m => m.MovieTitle).ToList();
                         break;
                     default:
                         movies = db.Movies.Include(m => m.MovieGenre).ToList();
@@ -177,7 +177,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMovie(Movie IncomingMovie)
+        public HttpStatusCodeResult CreateMovie(Movie IncomingMovie)
         {
             try
             {
@@ -188,13 +188,15 @@ namespace RAD301_CA2_s00128052.Controllers
                         IncomingMovie.MovieGenre = db.Genres.SingleOrDefault(g => g.GenreId == IncomingMovie.GenreId);
                         db.Movies.Add(IncomingMovie);
                         db.SaveChanges();
+                        return new HttpStatusCodeResult(200);
                     }
                 }
-                return RedirectToAction("Index");
+                else
+                    return new HttpStatusCodeResult(400);
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
             }
         }
 
@@ -209,7 +211,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditMovie(Movie EditMovieIncoming)
+        public HttpStatusCodeResult EditMovie(Movie EditMovieIncoming)
         {
             if (EditMovieIncoming != null)
             {
@@ -220,16 +222,16 @@ namespace RAD301_CA2_s00128052.Controllers
                         EditMovieIncoming.MovieGenre = db.Genres.SingleOrDefault(g => g.GenreId == EditMovieIncoming.GenreId);
                         db.Entry(EditMovieIncoming).State = System.Data.EntityState.Modified;
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return new HttpStatusCodeResult(200);
                     }
                 }
                 catch
                 {
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(400);
                 }
             }
             else
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
         }
 
         public PartialViewResult DeleteMovie(int id)
@@ -239,7 +241,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteMovieConfirmed(int id)
+        public HttpStatusCodeResult DeleteMovieConfirmed(int id)
         {
             try
             {
@@ -249,15 +251,15 @@ namespace RAD301_CA2_s00128052.Controllers
                     {
                         db.Movies.Remove(db.Movies.SingleOrDefault(m => m.MovieId == id));
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return new HttpStatusCodeResult(200);
                     }
                 }
                 else
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(400);
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
             }
         }
 
@@ -271,7 +273,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateActor(Actor IncomingActor)
+        public HttpStatusCodeResult CreateActor(Actor IncomingActor)
         {
             try
             {
@@ -281,17 +283,17 @@ namespace RAD301_CA2_s00128052.Controllers
                     {
                         db.Actors.Add(IncomingActor);
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return new HttpStatusCodeResult(200);
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(400);
                 }
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
             }
         }
 
@@ -305,7 +307,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditActor(Actor EditActorIncoming)
+        public HttpStatusCodeResult EditActor(Actor EditActorIncoming)
         {
             if (EditActorIncoming != null)
             {
@@ -317,18 +319,18 @@ namespace RAD301_CA2_s00128052.Controllers
                         {
                             db.Entry(EditActorIncoming).State = System.Data.EntityState.Modified;
                             db.SaveChanges();
-                            return RedirectToAction("Index");
+                            return new HttpStatusCodeResult(200);
                         }
                     }
                     else
-                        return RedirectToAction("Index");
+                        return new HttpStatusCodeResult(400);
                 }
                 catch
                 {
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(400);
                 }
             }
-            else return RedirectToAction("Index");
+            else return new HttpStatusCodeResult(400);
         }
 
         public PartialViewResult DeleteActor(int id)
@@ -338,7 +340,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult DeleteActorConfirmed(int id)
+        public HttpStatusCodeResult DeleteActorConfirmed(int id)
         {
             try
             {
@@ -346,12 +348,12 @@ namespace RAD301_CA2_s00128052.Controllers
                 {
                     db.Actors.Remove(db.Actors.SingleOrDefault(a => a.ActorId == id));
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(200);
                 }
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
             }
         }
 
@@ -387,7 +389,7 @@ namespace RAD301_CA2_s00128052.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateMovieActor(MovieActor IncomingCharacter)
+        public HttpStatusCodeResult CreateMovieActor(MovieActor IncomingCharacter)
         {
             try
             {
@@ -399,17 +401,17 @@ namespace RAD301_CA2_s00128052.Controllers
                         IncomingCharacter.Movie = db.Movies.SingleOrDefault(m => m.MovieId == IncomingCharacter.MovieId);
                         db.MovieActors.Add(IncomingCharacter);
                         db.SaveChanges();
-                        return RedirectToAction("Index");
+                        return new HttpStatusCodeResult(200);
                     }
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return new HttpStatusCodeResult(400);
                 }
             }
             catch
             {
-                return RedirectToAction("Index");
+                return new HttpStatusCodeResult(400);
             }
         }
 

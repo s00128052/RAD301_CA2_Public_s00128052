@@ -25,8 +25,8 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index")</li>
-                    <li><a onclick="AllMovies()">Movies</a></li>
-                    <li><a onclick="AllActors()">Actors</a></li>
+                    <li><a onclick="$('#CreateMovieForm').hide(), $('#EditMovieForm').hide(), $('#CreateActorForm').hide(), $('#EditActorForm').hide(), $('#CreateMovieActorForm').hide(), AllMovies()">Movies</a></li>
+                    <li><a onclick="$('#CreateMovieForm').hide(), $('#EditMovieForm').hide(), $('#CreateActorForm').hide(), $('#EditActorForm').hide(), $('#CreateMovieActorForm').hide(), AllActors()">Actors</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

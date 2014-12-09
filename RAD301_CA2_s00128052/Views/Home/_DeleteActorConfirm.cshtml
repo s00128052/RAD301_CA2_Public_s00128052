@@ -8,15 +8,16 @@
     </div>
     <div class="modal-body">
         <p>
-            <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;" />
+            <img src="@Url.Content(Model.ActorImageUrl)" alt="@Model.ActorSurname" style="width:250px;height:300px;" class="img-rounded"/>
         </p>
-        <p>@Html.DisplayNameFor(m => Model.ActorFullName) : @Model.ActorFullName</p>
-        <p>@Html.DisplayNameFor(m => Model.ActorGender) : @Model.ActorGender</p>
-        <p>@Html.DisplayNameFor(m => Model.ActorDOB) : @Model.ActorDOB</p>
+        <p>@Html.DisplayNameFor(modelItem => Model.ActorDOB) : @Html.DisplayFor(modelItem => Model.ActorDOB)</p>
+        <p>@Html.DisplayNameFor(modelItem => Model.ActorGender) : @Html.DisplayFor(modelItem => Model.ActorGender)</p>
+        <p>@Html.DisplayNameFor(modelItem => Model.ActorDescription) : @Html.DisplayFor(modelItem => Model.ActorDescription)</p>
+        <input type="hidden" id="ContentDelete" value="@Model.ActorFullName" />
     </div>
     <div class="modal-footer">
-        <button type="button" id="DeleteActor" data-dismiss="modal" onclick="DeleteActor('@Model.ActorId')">Confirm</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="DeleteActor" data-dismiss="modal" class="btn btn-danger btn-sm" onclick="DeleteActor('@Model.ActorId')"><span class="glyphicon glyphicon-ok" style="margin-right: 5px;"></span>Confirm</button>
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal"><span class="glyphicon glyphicon-remove" style="margin-right: 5px;" />Cancel</button>
     </div>
 }
 else
